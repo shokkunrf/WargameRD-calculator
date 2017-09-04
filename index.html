@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Wargame:RDcalculator</title>
+    <!--
+    <script src="lib/jquery-3.2.0.js"></script>
+    <link rel="stylesheet" href="lib/bootstrap.css">
+    <script src="lib/bootstrap.js"></script>
+-->
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div class="ctrl--disabled">
+        <form action="model.php" method="POST"></form>
+    </div>
+    <div class="view">
+        <header>
+            <h1>Wargame:Red Dragon-calculator-</h1>
+        </header>
+        <div>
+            <ui class="nav-tab">
+                <li>
+                    <label for="ctrl__tab0">Home</label>
+                </li>
+                <li>
+                    <label for="ctrl__tab1">Damage</label>
+                </li>
+                <li>
+                    <label for="ctrl__tab2">Stealth</label>
+                </li>
+            </ui>
+        </div>
+
+        <div class="flex-container flex-container--wrap">
+            <!--タブを切り替えるためのラジオボタン　非表示-->
+            <input type="radio" id="ctrl__tab0" name="tab" class="ctrl--disabled" checked>
+            <input type="radio" id="ctrl__tab1" name="tab" class="ctrl--disabled">
+            <input type="radio" id="ctrl__tab2" name="tab" class="ctrl--disabled">
+            <!---->
+
+            <section id="home">
+                <div>
+                    <h2>※注意</h2>
+                    <div class="">
+                        <p>Wargame:Red Dragonの非公式の計算機です。</p>
+                        <p>デッキを組む際の目安に利用できます。</p>
+                        <p>デザインのために英語で表記されています。</p>
+                        <p>damageタブより、AP攻撃とHE攻撃によるダメージの計算を行えます。
+                            <br/>stealthタブより、ステルス値と視界値による可視距離を確認できます。</p>
+                        <p>Artyの比較などにお使いください。</p>
+                        <div class="line"></div>
+                        <p>こちらより言語の変更が可能になればいいな。</p>
+                        <div class="">
+                            <input type="radio" name="lang">English
+                            <input type="radio" name="lang">日本語
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="damage">
+                <h2>AP damage</h2>
+                <div class="flex-container flex-container--wrap">
+                    <div class="item-block">
+                        <div class="flex-container">
+                            <div class="form form__atc">
+                                <span class="form__title">Attack Side</span>
+                                <div>
+                                    <label for="ap__power">AP Power:</label>
+                                    <input id="ap__power" type="number" min=0>
+                                </div>
+                                <div>
+                                    <label for="ap__type">Type:</label>
+                                    <select id="ap__type">
+                                    <option value="KE">KE</option>                                
+                                    <option value="HEAT">HEAT</option>
+                               </select>
+                                </div>
+
+                            </div>
+                            <div class="form form__def">
+                                <span class="form__title">Defense Side</span>
+                                <!--label,inputはinlineのため、divで区切ることでblock化-->
+                                <div>
+                                    <label for="ap__armor">Armor:</label>
+                                    <input id="ap__armor" type="number" min=0>
+                                </div>
+                                <div>
+                                    <label for="ap__strength">Strength:</label>
+                                    <input id="ap__strength" type="number" min=1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-block">
+                        <div id="ap">
+                            <div>
+                                <label>AP damage:</label>
+                                <span id="value__ap"></span>
+                            </div>
+                            <div class="bar__back">
+                                <div id="bar__ap"></div>
+                            </div>
+                            <div>
+                                <label>damage/strength:</label>
+                                <span id="value__aphp"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line"></div>
+
+                <h2>HE damage</h2>
+                <div class="flex-container flex-container--wrap">
+                    <div class="item-block">
+                        <div class="flex-container">
+                            <div class="form form__atc">
+                                <span class="form__title">Attack Side</span>
+                                <div>
+                                    <label for="he__power">HE Power:</label>
+                                    <input id="he__power" type="number" min=0>
+                                </div>
+                            </div>
+                            <div class="form form__def">
+                                <span class="form__title">Defense Side</span>
+                                <!--label,inputはinlineのため、divで区切ることでblock化-->
+                                <div>
+                                    <label for="he__armor">Armor:</label>
+                                    <input id="he__armor" type="number" min=0>
+                                </div>
+                                <div>
+                                    <label for="he__strength">Strength:</label>
+                                    <input id="he__strength" type="number" min=1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-block">
+                        <div id="he">
+                            <div class="bar-label">
+                                <label>HE damage:</label>
+                                <span id="value__he"></span>
+                            </div>
+                            <div class="bar__back">
+                                <div id="bar__he"></div>
+                            </div>
+                            <div>
+                                <span>damage/strength:</span>
+                                <span id="value__hehp"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="distance">
+                <h2>Stealth Distance</h2>
+                <div class="flex-container">
+                    <div class="item-block">
+                        <div class="flex-container">
+                            <div class="form form__def">
+                                <span class="form__title">Hide Side</span>
+                                <div>
+                                    <label>STEALTH:</label>
+                                    <select id="stealth">
+                                    <option value="exceptional">exceptional</option>                                
+                                    <option value="very">very</option>
+                                    <option value="good">good</option>
+                                    <option value="good">midium</option>
+                                    <option value="poor">poor</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form form__atc">
+                                <span class="form__title">Recon Side</span>
+                                <div>
+                                    <label>OPTICS:</label>
+                                    <select id="optics">
+                                    <option value="exceptional">exceptional</option>                                
+                                    <option value="very">very</option>
+                                    <option value="good">good</option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-block">
+                        <div id="forest">
+                            <div class="">
+                                <label>in forest area:</label>
+                                <span id="value__forest"></span>
+                            </div>
+                            <div class="bar__back">
+                                <div id="bar__forest"></div>
+                            </div>
+                        </div>
+                        <div id="urban">
+                            <div class="">
+                                <label>in urban area:</label>
+                                <span id="value__urban"></span>
+                            </div>
+                            <div class="bar__back">
+                                <div id="bar__urban"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="foot" class="ctrl--disabled">
+                <input onclick="calc()" id="form__send" class="btn" type="button" value="Calc">
+            </div>
+            <div id="start" class="ctrl--disabled">
+                <label for="ctrl__tab1" class="btn flex-container">Start</label>
+            </div>
+        </div>
+        <footer>
+        </footer>
+    </div>
+    <!--コンテナ-->
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+
+/*全体*/
+body {
+  background-color: #1B2838;
+  color: #CCC;
+}
+.view{
+  padding-left: 5vw;
+  padding-right: 5vw;
+  /*左右5%のpadding*/
+}
+
+/*flexbox*/
+.flex-container{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.flex-container--wrap{
+  flex-wrap: wrap;
+}
+/*---*/
+.item-block{
+  display: block;
+  flex-basis: 50%;
+}
+
+/*タブ*/
+.ctrl--disabled,#damage,#distance,#home{
+  display: none;
+}
+#ctrl__tab1:checked~#damage,
+#ctrl__tab2:checked~#distance,
+#ctrl__tab1:checked~#foot,
+#ctrl__tab2:checked~#foot,
+#ctrl__tab0:checked~#home,
+#ctrl__tab0:checked~#start{
+  display:block;
+}
+
+.nav-tab{
+  display: inline-flex;
+  margin-left: 1rem;  
+}
+.nav-tab li{
+  background-color: #234;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  border: 0.1rem solid #345;
+  list-style-type: none;
+}
+.nav-tab li:hover{
+  background-color: #345;
+}
+.nav-tab label{
+  padding: 0.5rem;
+}
+section{
+  flex-grow: 1;
+  background-color: #234;
+  border: 0.1rem solid #345;
+  border-radius:1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+#damage input{
+  background-color: #CCC;
+  text-align: right;
+  width: 3em;
+  border-radius: 1em;
+}
+select{
+  background-color: #CCC;
+  border-radius: 1em;
+}
+.form{
+  display: block;
+  flex-basis: 35%;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  text-align: right;
+}
+.form__atc{
+  background-color: #633;
+  order: 1;
+}
+.form__def{
+  background-color: #357;
+  order: 2;
+}
+.form__title{
+/*inlineであるspanをblockにすることで周りに影響させる*/
+  display: block;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 0.1rem solid #CCC;
+  margin-bottom: 1rem;
+}
+
+.bar__back {
+  background-color: #CCC;
+  border-radius: 1rem;
+  width: 100%;
+  height: 2rem;
+}
+#bar__ap,#bar__he,#bar__forest,#bar__urban {
+  background-color: #933;
+  border-radius: 1rem;
+  width: 75%;
+  height: 100%;
+  transition: all .5s ease;  
+}
+.line{
+  border: 0.1rem solid #345;
+}
+.btn{
+  background-color: #209CAA;
+  color: #000;
+  font-size: 1.5rem;
+  margin: 0.5rem;
+  border: 0.1rem solid #345;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+}
+.btn:hover{
+  background-color: #933;
+  color: #CCC;
+  transition: .5s;
+}
